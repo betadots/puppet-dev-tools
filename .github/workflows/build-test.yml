@@ -1,21 +1,21 @@
-name: Build-Test
-on:
-  - pull_request
-jobs:
-  Build-Test:
-    # Everything below here should be identical to build-test-push.yml with one exception:
-    # the "Tag Docker images", "Login to Docker Hub", and "Push Docker images" should have been removed.
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Build rootless image
-        run: ./build-rootless.sh $(echo $GITHUB_REPOSITORY |cut -d '/' -f1)
-      - name: Build standard image
-        run: ./build.sh $(echo $GITHUB_REPOSITORY |cut -d '/' -f1)
-      - name: Run tests
-        run: cd tests; ./run_tests.sh
-      - name: List Docker images
-        run: docker images --filter "reference=puppet-dev-tools*" --filter "reference=*/puppet-dev-tools*"
-      - name: Show Docker image labels
-        run: |
-          docker inspect --format='{{json .Config.Labels}}' ${{ secrets.DOCKERHUB_USERNAME }}/puppet-dev-tools
+# name: Build-Test
+# on:
+#   - pull_request
+# jobs:
+#   Build-Test:
+#     # Everything below here should be identical to build-test-push.yml with one exception:
+#     # the "Tag Docker images", "Login to Docker Hub", and "Push Docker images" should have been removed.
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Build rootless image
+#         run: ./build-rootless.sh $(echo $GITHUB_REPOSITORY |cut -d '/' -f1)
+#       - name: Build standard image
+#         run: ./build.sh $(echo $GITHUB_REPOSITORY |cut -d '/' -f1)
+#       - name: Run tests
+#         run: cd tests; ./run_tests.sh
+#       - name: List Docker images
+#         run: docker images --filter "reference=puppet-dev-tools*" --filter "reference=*/puppet-dev-tools*"
+#       - name: Show Docker image labels
+#         run: |
+#           docker inspect --format='{{json .Config.Labels}}' ${{ secrets.DOCKERHUB_USERNAME }}/puppet-dev-tools

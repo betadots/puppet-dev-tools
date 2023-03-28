@@ -255,4 +255,8 @@ def build_fixtures(controlrepo)
   end
 end
 
-
+begin
+  require 'voxpupuli/acceptance/rake'
+rescue LoadError
+  # load optional tasks for acceptance
+end

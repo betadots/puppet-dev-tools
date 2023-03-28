@@ -1,9 +1,9 @@
 # specifying the platform here allows builds to work
 # correctly on Apple Silicon machines
-FROM --platform=amd64 ruby:2.7.4-slim-buster as base
+FROM --platform=amd64 ruby:2.7.7-slim-bullseye as base
 
 ARG VCS_REF
-ARG GH_USER=puppetlabs
+ARG GH_USER=betadots
 
 LABEL org.label-schema.vcs-ref="${VCS_REF}" \
       org.label-schema.vcs-url="https://github.com/${GH_USER}/puppet-dev-tools"
@@ -23,8 +23,8 @@ RUN apt-get install -y apt-utils \
   && apt-get update -qq \
   && apt-get upgrade -y \
   && apt-get install -y --no-install-recommends curl libxml2-dev libxslt1-dev g++ gcc git gnupg2 make openssh-client ruby-dev wget zlib1g-dev libldap-2.4-2 libldap-common libssl1.1 openssl cmake\
-  && wget https://apt.puppet.com/puppet-tools-release-buster.deb \
-  && dpkg -i puppet-tools-release-buster.deb \
+  && wget https://apt.puppet.com/puppet-tools-release-bullseye.deb \
+  && dpkg -i puppet-tools-release-bullseye.deb \
   && apt-get update -qq \
   && apt-get install -y --no-install-recommends pdk \
   && apt-get autoremove -y \
@@ -39,7 +39,7 @@ RUN ln -s /bin/mkdir /usr/bin/mkdir
 # Run tests on a module created with PDK 1.18.1 using the current PDK to pull in
 # any other dependencies and then delete the 1.18.1 test module.
 #
-# Simply running "bundle install" against the module is not enough, 
+# Simply running "bundle install" against the module is not enough,
 # as PDK has further dependencies to pull in.
 COPY pdk_1_18_1_dependencies /test_module
 RUN cd test_module \

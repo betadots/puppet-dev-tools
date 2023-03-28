@@ -22,7 +22,7 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get install -y apt-utils \
   && apt-get update -qq \
   && apt-get upgrade -y \
-  && apt-get install -y --no-install-recommends curl libxml2-dev libxslt1-dev g++ gcc git gnupg2 make openssh-client ruby-dev wget zlib1g-dev libldap-2.4-2 libldap-common libssl1.1 openssl cmake\
+  && apt-get install -y --no-install-recommends curl libxml2-dev libxslt1-dev g++ gcc git gnupg2 make openssh-client ruby-dev wget zlib1g-dev libldap-2.4-2 libldap-common libssl1.1 openssl cmake pkg-config\
   && wget https://apt.puppet.com/puppet-tools-release-bullseye.deb \
   && dpkg -i puppet-tools-release-bullseye.deb \
   && apt-get update -qq \

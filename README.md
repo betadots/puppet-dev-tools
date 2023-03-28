@@ -1,39 +1,33 @@
 # Puppet Dev Tools
 
-![GitHub Actions Build-Test-Push status](https://github.com/puppetlabs/puppet-dev-tools/workflows/Build-Test-Push/badge.svg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=puppetlabs/puppet-dev-tools)](https://dependabot.com)
-[![](https://images.microbadger.com/badges/version/puppet/puppet-dev-tools.svg)](https://microbadger.com/images/puppet/puppet-dev-tools "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/commit/puppet/puppet-dev-tools.svg)](https://microbadger.com/images/puppet/puppet-dev-tools "Get your own commit badge on microbadger.com")
-
 ## Docker Tags
 
-- `<year>-<month>-<day>-<a short string>`: Each merge to master generates an image tagged with the date of its build followed by a short git SHA. These images are suitable for pinning to if you do not wish to live on the edge with `4.x`. Changes from one image to the next will include things shown in the [commit history](https://github.com/puppetlabs/puppet-dev-tools/commits/master) on GitHub and updated operating system packages pulled in at build time. The latest version of the PDK is also pulled in at build time.
-- `<year>-<month>-<day>-<a short string>-rootless`: This is just like the tag above but the container runs as a user namecd `puppetdev`.
-- `4.x`: This the tag that is used in the 4.x versions of CD4PE. This tag is updated manually from time to time.
-- `latest`: This is a legacy tag and not not actually the current build of puppet-dev-tools. It is the build used in older versions of CD4PE (prior to 4.0). These builds are manually created by the CD4PE team.
+- `development`: latest changes on the image, could be broken
+- `v0.0.0`: tag which is tested and stable
+- `latest`: tag alias on the last released version-tag
 
 ## Running
 
-You can use this container by running `docker run --rm -v $(pwd):/repo puppet/puppet-dev-tools <command>` where `<command>` is any of the ones listed below.
+You can use this container by running `docker run --rm -v $(pwd):/repo ghcr.io/betadots/puppet-dev-tools:latest <command>` where `<command>` is any of the ones listed below.
 
 ## Supported Commands
 
 1. PDK - `pdk`
-   - run `docker run --rm puppet/puppet-dev-tools:4.x pdk --help` to see builtin help
-   - see the [PDK command reference](https://puppet.com/docs/pdk/1.x/pdk_reference.html) for details
+   - run `docker run --rm ghcr.io/betadots/puppet-dev-tools:latest pdk --help` to see builtin help
+   - see the [PDK command reference](https://www.puppet.com/docs/pdk/2.x/pdk_reference.html) for details
 2. Onceover - `onceover`
-   - run `docker run --rm puppet/puppet-dev-tools:4.x onceover --help` to see builtin help
+   - run `docker run --rm ghcr.io/betadots/puppet-dev-tools:latest onceover --help` to see builtin help
    - see [Onceover's readme](https://github.com/dylanratcliffe/onceover/blob/master/README.md) for details
 3. Rake tasks from the installed gems (see below)
-   - run a single rake task like so: `docker run --rm -v $(pwd):/repo puppet/puppet-dev-tools:4.x rake -f /Rakefile lint`
-   - run multiple rake tasks sequentially like so: `docker run --rm -v $(pwd):/repo puppet/puppet-dev-tools:4.x rake -f /Rakefile lint syntax yamllint`
+   - run a single rake task like so: `docker run --rm -v $(pwd):/repo ghcr.io/betadots/puppet-dev-tools:latest rake -f /Rakefile lint`
+   - run multiple rake tasks sequentially like so: `docker run --rm -v $(pwd):/repo ghcr.io/betadots/puppet-dev-tools:latest rake -f /Rakefile lint syntax yamllint`
 
 ### A note on Onceover usage
 
 If your control repository contains a Gemfile you will likely want to modify the commands listed above to something like this:
 
 ```bash
-docker run --rm -v $(pwd):/repo puppet/puppet-dev-tools:latest \
+docker run --rm -v $(pwd):/repo ghcr.io/betadots/puppet-dev-tools:latest \
 /bin/bash -c "bundle install && bundle exec onceover run spec --force --trace --parallel"
 ```
 

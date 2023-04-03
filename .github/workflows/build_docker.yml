@@ -36,10 +36,10 @@ jobs:
           tags  = set()
 
           if "${{ github.ref }}".startswith('refs/pull'):
-            version = "${{ github.event.pull_request.base.ref }}"
+            version = "${{ github.event.pull_request.head.ref }}"
 
           if "${{ github.ref }}".startswith('refs/heads'):
-            version = "${{ github.event.push.base.ref }}"
+            version = "${{ github.event.push.head.ref }}"
 
           if version.startswith('v'):
             tags.add(f"{image}:latest")
@@ -51,6 +51,11 @@ jobs:
           tags = ",".join(sorted(list(tags)))
           print(f"::set-output name=tags::{tags}")
         id: tags
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Build and push
         uses: docker/build-push-action@v4

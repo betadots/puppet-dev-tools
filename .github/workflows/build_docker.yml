@@ -32,18 +32,18 @@ jobs:
           import re
           from packaging.version import parse
 
-          version = "${{ github.ref }}".replace("refs/tags/v", "")
           version = "${{ github.ref }}".split("/")[2]
           image   = "ghcr.io/${{ github.repository }}"
           tags    = set()
 
           if version.startswith('v'):
-            tags.add(f"{image}:{version}")
             if not parse(version).is_prerelease:
               tags.add(f"{image}:latest")
           else:
-            tags.add(f"{image}:{version}")
+            if version == 'main':
+              version = "development"
 
+          tags.add(f"{image}:{version}")
           tags = ",".join(sorted(list(tags)))
           print(f"::set-output name=tags::{tags}")
         id: tags

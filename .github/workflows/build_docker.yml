@@ -37,7 +37,7 @@ jobs:
           image   = "ghcr.io/${{ github.repository }}"
           tags    = set()
 
-          if version.startswith('v')
+          if version.startswith('v'):
             tags.add(f"{image}:{version}")
             if not parse(version).is_prerelease:
               tags.add(f"{image}:latest")

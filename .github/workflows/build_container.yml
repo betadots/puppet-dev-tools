@@ -1,5 +1,5 @@
 ---
-name: publish 🐳 conatiner image
+name: Build container 🐳
 
 on:
   push:

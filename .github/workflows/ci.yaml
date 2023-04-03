@@ -6,14 +6,14 @@ on:
 
 jobs:
   build_docker_image:
-    name: 'Built test container image'
+    name: 'Test container build'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Build Docker image
+      - name: Build container
         uses: docker/build-push-action@v4
         with:
           context: .

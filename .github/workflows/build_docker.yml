@@ -32,16 +32,20 @@ jobs:
           import re
           from packaging.version import parse
 
-          version = "${{ github.ref }}".split("/")[2]
-          image   = "ghcr.io/${{ github.repository }}"
-          tags    = set()
+          image = "ghcr.io/${{ github.repository }}"
+          tags  = set()
+
+          if "${{ github.ref }}".startswith('refs/pull'):
+            version = "{{ github.event.pull_request.base.ref }}"
+
+          if "${{ github.ref }}".startswith('refs/heads'):
+            version = "{{ github.event.push.base.ref }}"
 
           if version.startswith('v'):
-            if not parse(version).is_prerelease:
-              tags.add(f"{image}:latest")
-          else:
-            if version == 'main':
-              version = "development"
+            tags.add(f"{image}:latest")
+
+          if version == 'main':
+            version = "development"
 
           tags.add(f"{image}:{version}")
           tags = ",".join(sorted(list(tags)))

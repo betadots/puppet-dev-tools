@@ -48,11 +48,6 @@ jobs:
           print(f"::set-output name=tags::{tags}")
         id: tags
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - name: Build and push
         uses: docker/build-push-action@v4
         with:

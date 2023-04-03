@@ -34,9 +34,10 @@ jobs:
 
           image   = "ghcr.io/${{ github.repository }}"
           tags    = set()
-          version = "${{ github.head_ref }}"
+          version = "${{ github.ref }}".split("/")[2]
 
           if version.startswith('v'):
+            version = "${{ github.ref }}".replace("v", "")
             tags.add(f"{image}:latest")
 
           if version == 'main':

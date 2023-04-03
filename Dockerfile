@@ -88,8 +88,7 @@ RUN bundle config set system 'true' \
   && bundle config set jobs 3 \
   && bundle install \
   && rm -f /home/puppetdev/.bundle/config \
-  && rm -rf /usr/local/bundle/gems/puppet-7.*.0/spec \
-  && gem uninstall -i /usr/local/lib/ruby/gems/2.7.0 minitest
+  && rm -rf /usr/local/bundle/gems/puppet-7.*.0/spec
 
 WORKDIR /repo
 

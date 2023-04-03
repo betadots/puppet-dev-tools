@@ -1,7 +1,7 @@
-name: publish 🐳 Docker image
+---
+name: publish 🐳 conatiner image
 
 on:
-  pull_request:
   push:
     branches:
       - 'main'
@@ -32,14 +32,9 @@ jobs:
           import re
           from packaging.version import parse
 
-          image = "ghcr.io/${{ github.repository }}"
-          tags  = set()
-
-          if "${{ github.ref }}".startswith('refs/pull'):
-            version = "${{ github.event.pull_request.head.ref }}"
-
-          if "${{ github.ref }}".startswith('refs/heads'):
-            version = "${{ github.event.push.head.ref }}"
+          image   = "ghcr.io/${{ github.repository }}"
+          tags    = set()
+          version = "${{ github.head_ref }}"
 
           if version.startswith('v'):
             tags.add(f"{image}:latest")

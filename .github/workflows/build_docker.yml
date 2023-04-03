@@ -36,10 +36,10 @@ jobs:
           tags  = set()
 
           if "${{ github.ref }}".startswith('refs/pull'):
-            version = "{{ github.event.pull_request.base.ref }}"
+            version = "${{ github.event.pull_request.base.ref }}"
 
           if "${{ github.ref }}".startswith('refs/heads'):
-            version = "{{ github.event.push.base.ref }}"
+            version = "${{ github.event.push.base.ref }}"
 
           if version.startswith('v'):
             tags.add(f"{image}:latest")

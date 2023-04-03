@@ -97,3 +97,5 @@ FROM base AS rootless
 
 FROM base AS main
 USER root
+
+RUN gem uninstall -i /usr/local/lib/ruby/gems/2.7.0 minitest

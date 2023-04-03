@@ -1,7 +1,7 @@
-name: publish 🐳 Docker image
+---
+name: Build container 🐳
 
 on:
-  pull_request:
   push:
     branches:
       - 'main'
@@ -31,18 +31,26 @@ jobs:
         run: |
           import re
           from packaging.version import parse
-          version = "${{ github.ref }}".replace("refs/tags/v", "")
-          image = "ghcr.io/${{ github.repository }}"
-          tags = set()
-          if version == 'refs/heads/main':
-              tags.add(f"{image}:development")
-          else:
-              tags.add(f"{image}:{version}")
-              if not parse(version).is_prerelease:
-                  tags.add(f"{image}:latest")
+
+          image   = "ghcr.io/${{ github.repository }}"
+          tags    = set()
+          version = "${{ github.head_ref }}"
+
+          if version.startswith('v'):
+            tags.add(f"{image}:latest")
+
+          if version == 'main':
+            version = "development"
+
+          tags.add(f"{image}:{version}")
           tags = ",".join(sorted(list(tags)))
           print(f"::set-output name=tags::{tags}")
         id: tags
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Build and push
         uses: docker/build-push-action@v4

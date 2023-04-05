@@ -47,8 +47,8 @@ jobs:
           tags.add(f"{image}:{version}")
           tags = ",".join(sorted(list(tags)))
 
-          # print(f"::set-output name=tags::{tags}")
-          os.environ['GITHUB_OUTPUT'] = f"name=tags::{tags}"
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+            print(f'tags={tags}', file=fh)
         id: tags
 
       - name: Build and push

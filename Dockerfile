@@ -1,6 +1,6 @@
 # specifying the platform here allows builds to work
 # correctly on Apple Silicon machines
-FROM --platform=amd64 ruby:3.1.4-slim-bullseye as base
+FROM --platform=amd64 ruby:3.2.2-slim-bullseye as base
 
 ARG VCS_REF
 ARG GH_USER=betadots
@@ -100,4 +100,4 @@ FROM base AS rootless
 FROM base AS main
 USER root
 
-RUN gem uninstall -i /usr/local/lib/ruby/gems/3.1.0 minitest
+RUN gem uninstall -i /usr/local/lib/ruby/gems/3.2.0 minitest

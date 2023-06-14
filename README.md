@@ -22,6 +22,10 @@ You can use this container by running `docker run --rm -v $(pwd):/repo ghcr.io/b
    - run a single rake task like so: `docker run --rm -v $(pwd):/repo ghcr.io/betadots/puppet-dev-tools:latest rake -f /Rakefile lint`
    - run multiple rake tasks sequentially like so: `docker run --rm -v $(pwd):/repo ghcr.io/betadots/puppet-dev-tools:latest rake -f /Rakefile lint syntax yamllint`
 
+4. Puppet - `puppet`
+   - remove the GEM_HOME environment variable `unset GEM_HOME`
+   - now you can use the puppet-agent installed puppet: `/opt/puppetlabs/puppet/bin/puppet --version`
+
 ### A note on Onceover usage
 
 If your control repository contains a Gemfile you will likely want to modify the commands listed above to something like this:
@@ -30,6 +34,12 @@ If your control repository contains a Gemfile you will likely want to modify the
 docker run --rm -v $(pwd):/repo ghcr.io/betadots/puppet-dev-tools:latest \
 /bin/bash -c "bundle install && bundle exec onceover run spec --force --trace --parallel"
 ```
+
+### A note on using puppet catalog-diff
+
+The voxpupuli catalog-diff module and its dependencies (puppetdb-termini) are part of this container.
+
+To allow running `puppet catalog diff` one must unset the GEM_HOME variable `unset GEM_HOME` and can then run puppet using the full path: `unset GEM_HOME && /opt/puppetlabs/puppet/bin/puppet --version`
 
 <!-- Everything below the Rake Tasks header will be overwritten by build.sh -->
 

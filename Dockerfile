@@ -42,10 +42,10 @@ RUN apt-get install -y apt-utils \
     zlib1g-dev \
     yamllint \
     python3-yaml \
-  && wget https://apt.puppet.com/puppet-tools-release-bullseye.deb \
-  && dpkg -i puppet-tools-release-bullseye.deb \
+  && wget https://apt.puppet.com/puppet-release-bullseye.deb \
+  && dpkg -i puppet-release-bullseye.deb \
   && apt-get update -qq \
-  && apt-get install -y --no-install-recommends pdk \
+  && apt-get install -y --no-install-recommends pdk puppetdb-termini\
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /opt/puppetlabs/pdk/private/puppet/ruby/2.5.0/gems/httpclient-2.8.3/sample/ssl/* \
@@ -55,6 +55,7 @@ RUN apt-get install -y apt-utils \
 
 RUN ln -s /bin/mkdir /usr/bin/mkdir
 RUN ln -s /usr/bin/python3 /usr/local/bin/python
+RUN /opt/puppetlabs/puppet/bin/puppet module install puppet-catalog_diff
 
 # Run tests on a module created with PDK 1.18.1 using the current PDK to pull in
 # any other dependencies and then delete the 1.18.1 test module.

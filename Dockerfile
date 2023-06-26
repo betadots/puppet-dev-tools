@@ -1,6 +1,6 @@
 # specifying the platform here allows builds to work
 # correctly on Apple Silicon machines
-FROM --platform=amd64 ruby:2.7.7-slim-bullseye as base
+FROM --platform=amd64 ruby:3.2.2-slim-bullseye as base
 
 ARG VCS_REF
 ARG GH_USER=betadots
@@ -91,7 +91,7 @@ RUN bundle config set system 'true' \
   && bundle config set jobs 3 \
   && bundle install \
   && rm -f /home/puppetdev/.bundle/config \
-  && rm -rf /usr/local/bundle/gems/puppet-7.*.0/spec
+  && rm -rf /usr/local/bundle/gems/puppet-8.*.0/spec
 
 WORKDIR /repo
 
@@ -100,4 +100,4 @@ FROM base AS rootless
 FROM base AS main
 USER root
 
-RUN gem uninstall -i /usr/local/lib/ruby/gems/2.7.0 minitest
+RUN gem uninstall -i /usr/local/lib/ruby/gems/3.2.0 minitest

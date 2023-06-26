@@ -1,14 +1,3 @@
-GIT
-  remote: https://github.com/tuxmea/onceover-codequality.git
-  revision: d4d4150d0490e27a56cdea58cc93d7974446e99e
-  branch: lint_strings_4
-  specs:
-    onceover-codequality (0.8.0)
-      onceover (~> 3)
-      puppet-lint (~> 4)
-      puppet-strings (~> 4)
-      puppet-syntax (~> 3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -188,6 +177,11 @@ GEM
       rspec_junit_formatter (>= 0.2.0)
       terminal-table (>= 1.8.0)
       versionomy (>= 0.5.0)
+    onceover-codequality (0.10.0)
+      onceover (~> 3)
+      puppet-lint (~> 4)
+      puppet-strings (~> 4)
+      puppet-syntax (~> 3)
     onceover-lookup (0.1.1)
       onceover (~> 3)
     onceover-octocatalog-diff (0.1.8)
@@ -464,7 +458,7 @@ DEPENDENCIES
   minitest (~> 5.18)
   nokogiri (~> 1.14)
   onceover (~> 3.20)
-  onceover-codequality!
+  onceover-codequality (~> 0.10)
   onceover-lookup (~> 0.1, >= 0.1.1)
   onceover-octocatalog-diff (~> 0.1, >= 0.1.8)
   parallel (~> 1.22, >= 1.22.1)
